@@ -1,3 +1,4 @@
+import NavItem from './NavItem';
 
 
 interface NavbarProps{
@@ -17,29 +18,8 @@ export default function Navbar(props: NavbarProps){
 
     <div className="collapse navbar-collapse" id="navbarColor01">
       <ul className="navbar-nav me-auto">
-        <li className="nav-item">
-          <a 
-           className={`nav-link `+ (props.page ? "active" : "")} href="#"
-           onClick={
-            (event)=>{
-              event.preventDefault();
-              props.goToAuthorRegisterPage();
-            }
-           }
-          >
-            Cadastrar Autor
-          </a>
-        </li>
-        <li className="nav-item">
-          <a className={`nav-link `+ (props.page ? "": "active")} href="#"
-            onClick={
-              (event)=>{
-              event.preventDefault();
-              props.goToBookRegisterPage()
-              }
-            }
-          >Cadastrar Obra</a>
-        </li>
+        <NavItem page={props.page} goToPage={props.goToAuthorRegisterPage} label={'Cadastrar Autor'}/>
+        <NavItem page={!props.page} goToPage={props.goToBookRegisterPage} label={'Cadastrar Obra'}/>
         <li className="nav-item dropdown">
           <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Cadastrar</a>
           <div className="dropdown-menu">
