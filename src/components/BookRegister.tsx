@@ -2,6 +2,7 @@ import {FormEvent, useState} from "react";
 import { AuthorModel } from "./AuthorRegister";
 import FormGroup from './FormGroup';
 import DatePicker from "react-datepicker";
+import Navbar from "./Navbar";
 
 interface BookRegisterProps{
   bookList: BookModel[];
@@ -107,31 +108,36 @@ export default function BookRegister(props: BookRegisterProps){
     setIndex(index);
     setAuthor(props.authorList[index]);
   }
+
+  
   function submitBook(event: FormEvent<HTMLFormElement>){
     event.preventDefault();
     
     const bookTitleElement = document.getElementById("bookTitle");
     var entrou: boolean = false;
     if(bookTitle.length === 0){
-      bookTitleElement?.classList.add("error");
+      bookTitleElement?.classList.add("is-invalid");
 
       entrou= true;
     } else{
-      bookTitleElement?.classList.remove("error");
+      bookTitleElement?.classList.remove("is-invalid");
+      bookTitleElement?.classList.add("is-valid");
     }
     const authorElement = document.getElementById("author");
-    if(author.name == defaultAuthor.name){
-      authorElement?.classList.add("error");
-      entrou= true;
+    if(author.name === defaultAuthor.name){
+      authorElement?.classList.add("is-invalid");
+      entrou = true;
     } else{
-      authorElement?.classList.remove("error");
+      authorElement?.classList.remove("is-invalid");
+      authorElement?.classList.add("is-valid");
     }
     const genreElement = document.getElementById("genre");
     if(genre.length === 0){
-      genreElement?.classList.add("error");
+      genreElement?.classList.add("is-invalid");
       entrou= true;
     } else{
-      genreElement?.classList.remove("error");
+      genreElement?.classList.remove("is-invalid");
+      genreElement?.classList.add("is-valid");
     }
 
 
@@ -151,49 +157,50 @@ export default function BookRegister(props: BookRegisterProps){
 
   return (
     <>
-    <h3>Cadastro de Obra</h3>
-    <form action="" onSubmit={(event)=>submitBook(event)}>
-      <fieldset>
-        <FormGroup label="Nome da Obra" forModel="bookTitle">
-          <input className="form-control" type="text" name="bookTitle" id="bookTitle" placeholder="Nome da Obra" 
-          value={bookTitle}
-          onChange={(event) =>{setBookTitle(event.target.value)}}/>
-        </FormGroup>
-        <FormGroup label="Autor" forModel="author" >
-          <select value={index} name="author" id="author" className="form-select" 
-            onChange={(event) =>{
-            setAuthorByIndex(Number(event.target.value))
-            }
-          }>
-            <option value={-1}> Selecione um autor </option>
-            {authorOptions()}
-
-          </select>
-
-        </FormGroup>
-        <FormGroup label="Data de Publicação" forModel="publicationDate">
-            <DatePicker 
-            id="publicationDate"
-            selected={publicationDate}
-            onChange={(date:Date) => setPublicationDate(date)}
-            minDate={author.birthDate}
-            showYearDropdown
-            showMonthDropdown
-            dropdownMode="select"
-            className="form-control"
-            dateFormat="dd/MM/yyyy"
-            />
-        </FormGroup>
-        <FormGroup label="Gênero" forModel="genre">
-          <input className="form-control" type="text" name="genre" id="genre" placeholder="Gênero" 
-          value={genre}
-          onChange={(event) =>{setGenre(event.target.value)}}/>
-        </FormGroup>
-      </fieldset>
-      <button className="btn btn-primary submit-btn" type="submit"  >Cadastrar</button>
-    </form>
-    {props.userListChanged ? updateBookList() : null};
-    {listChanged ? setListChanged(false) : bookRegisterList(props.bookList)}
+    <Navbar />
+    <main className="form-center">
+      <h3>Cadastro de Obra</h3>
+      <form action="" onSubmit={(event) => submitBook(event)}>
+        <fieldset>
+          <FormGroup label="Nome da Obra" forModel="bookTitle">
+            <input className="form-control" type="text" name="bookTitle" id="bookTitle" placeholder="Nome da Obra"
+              value={bookTitle}
+              onChange={(event) => { setBookTitle(event.target.value); } } />
+          </FormGroup>
+          <FormGroup label="Autor" forModel="author">
+            <select value={index} name="author" id="author" className="form-select"
+              onChange={(event) => {
+                setAuthorByIndex(Number(event.target.value));
+              } }>
+              <option value={-1}> Selecione um autor </option>
+              {authorOptions()}
+            </select>
+          </FormGroup>
+          <FormGroup label="Data de Publicação" forModel="publicationDate">
+            <DatePicker
+              id="publicationDate"
+              selected={publicationDate}
+              onChange={(date: Date) => setPublicationDate(date)}
+              minDate={author.birthDate}
+              showYearDropdown
+              showMonthDropdown
+              dropdownMode="select"
+              className="form-control"
+              dateFormat="dd/MM/yyyy" />
+          </FormGroup>
+          <FormGroup label="Gênero" forModel="genre">
+            <input className="form-control" type="text" name="genre" id="genre" placeholder="Gênero"
+              value={genre}
+              onChange={(event) => { setGenre(event.target.value); } } />
+          </FormGroup>
+        </fieldset>
+        <button className="btn btn-primary submit-btn" type="submit">Cadastrar</button>
+      </form>
+      <>
+      {props.userListChanged ? updateBookList() : null}
+      {listChanged ? setListChanged(false) : bookRegisterList(props.bookList)}
+      </>
+    </main>
     </>
   )
 }

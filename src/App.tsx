@@ -1,45 +1,28 @@
-import React from 'react';
 import {useState} from "react";
 
 import 'bootstrap';
 import 'bootswatch/dist/minty/bootstrap.css'
+/*
+import 'bootswatch/dist/sandstone/bootstrap.css'
+import 'bootswatch/dist/litera/bootstrap.css'
+import 'bootswatch/dist/zephyr/bootstrap.css'
+*/
 
-import Navbar from './components/Navbar'
-
-import AuthorRegister, {AuthorModel} from './components/AuthorRegister';
-import BookRegister, { BookModel } from './components/BookRegister';
+import {AuthorModel} from './components/AuthorRegister';
+import { BookModel } from './components/BookRegister';
+import AppRoutes from './main/AppRoutes';
 
 const authorList: AuthorModel[] = [];
 const bookList: BookModel[] = [];
 
 function App() {
-  const [page, setPage] = useState(true);
   const [userListChanged, setUserListChanged] = useState(false);
 
   return (
     <>
-      <header>
-        <Navbar
-         page={page}
-         goToAuthorRegisterPage={()=>{setPage(true)}}
-         goToBookRegisterPage={()=>{setPage(false)}}
-         />
-      </header>
-      <main className="form-center">
-        {
-          page ? 
-          <AuthorRegister 
-          authorList={authorList}
-          />
-          : 
-          <BookRegister
-          bookList={bookList}
-          authorList={authorList}
-          userListChanged={[userListChanged, setUserListChanged]}
-          />
-        }
-      </main>
-      <footer></footer>
+
+      <AppRoutes authorList={authorList} bookList={bookList} userListChanged={[userListChanged, setUserListChanged]} />
+      
     </>
   );
 }

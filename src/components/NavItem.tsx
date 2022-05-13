@@ -1,25 +1,19 @@
+import { Link } from "react-router-dom";
 
 interface NavItemProps{
-  page: boolean;
-  goToPage: ()=> void;
   label: string;
-
+  link: string;
 }
 
-export default function NavItem(props: NavItemProps){
+export default function NavItem({label, link}: NavItemProps){
   return (
     <li className="nav-item">
-      <a 
-      className={`nav-link `+ (props.page ? "active" : "")}
-      href="/" 
-      onClick={
-        (event)=>{
-          event.preventDefault();
-          props.goToPage();
-        }
-      }>
-        {props.label}
-      </a>
+      <Link
+      className="nav-link"
+      to={link} 
+      >
+        {label}
+      </Link>
     </li>
   )
 }

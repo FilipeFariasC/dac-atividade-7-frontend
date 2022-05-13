@@ -3,7 +3,8 @@ import FormGroup from "./FormGroup";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-import {subYears, subDays, addDays} from "date-fns";
+import {subYears} from "date-fns";
+import Navbar from "./Navbar";
 
 export interface AuthorModel {
   name: string;
@@ -46,11 +47,7 @@ export default function AuthorRegister ({authorList} : AuthorRegisterProps){
       </p>
       <p className="registerField">
         <p>Data de Nascimento:</p>
-        <span className="dia">{author.birthDate.getDate()}</span>
-        /
-        <span className="mes">{author.birthDate.getMonth()}</span>
-        /
-        <span className="ano">{author.birthDate.getFullYear()}</span>
+        {author.birthDate.toLocaleDateString()}
       </p>
       <p className="registerField">
         <p>Nacionalidade:</p>
@@ -60,13 +57,13 @@ export default function AuthorRegister ({authorList} : AuthorRegisterProps){
   );
 }
 
-function authorRegisterList(authorList: AuthorModel[]) {
-  return (
-    <div className={"registerList " + (authorList.length > 0 ? "show" : "")}>
-      {authorList.map((author, index) => authorRow(author, index))}
-    </div>
-  );
-}
+  function authorRegisterList() {
+    return (
+      <div className={"registerList " + (authorList.length > 0 ? "show" : "")}>
+        {authorList.map((author, index) => authorRow(author, index))}
+      </div>
+    );
+  }
 
 
   function submitAuthor(event: FormEvent<HTMLFormElement>){
@@ -75,18 +72,20 @@ function authorRegisterList(authorList: AuthorModel[]) {
     const authorNameElement = document.getElementById("name");
     var entrou: boolean = false;
     if(authorName.length === 0){
-      authorNameElement?.classList.add("error");
+      authorNameElement?.classList.add("is-invalid");
 
       entrou= true;
     } else{
-      authorNameElement?.classList.remove("error");
+      authorNameElement?.classList.remove("is-invalid");
+      authorNameElement?.classList.add("is-valid");
     }
     const authorBirthPlaceElement = document.getElementById("birthPlace");
     if(birthPlace.length === 0){
-      authorBirthPlaceElement?.classList.add("error");
+      authorBirthPlaceElement?.classList.add("is-invalid");
       entrou= true;
     } else{
-      authorBirthPlaceElement?.classList.remove("error");
+      authorBirthPlaceElement?.classList.remove("is-invalid");
+      authorBirthPlaceElement?.classList.add("is-valid");
     }
     if(entrou){
       return;
@@ -103,40 +102,49 @@ function authorRegisterList(authorList: AuthorModel[]) {
 
   return (
     <>
-      <h3>Cadastro de Autor</h3>
-      <form action="" onSubmit={(event) => {submitAuthor(event)}}>
-        <fieldset>
-          <FormGroup label="Nome do Autor" forModel="name">
-            <input className="form-control" type="text" name="name" id="name"
-            value={authorName}
-            onChange={(e) => setAuthorName(e.target.value)}
-            />
-          </FormGroup>
-          <FormGroup label="Data de Nascimento" forModel="birthDate">
-            <DatePicker 
-            id="birthDate"
-            selected={birthDate}
-            onChange={(date:Date) => setBirthDate(date)}
-            locale="pt-BR"
-            minDate={timestampZero}
-            maxDate={date}
-            showYearDropdown
-            showMonthDropdown
-            dropdownMode="select"
-            className="form-control"
-            dateFormat="dd/MM/yyyy"
-            />
-          </FormGroup>
-          <FormGroup label="Nacionalidade" forModel="birthPlace">
-            <input className="form-control" type="text" name="birthPlace" id="birthPlace"
-            value={birthPlace}
-            onChange={(e) => setBirthPlace(e.target.value)}
-            />
-          </FormGroup>
-        </fieldset>
-        <button type="submit" className="btn btn-primary submit-btn">Submit</button>
-      </form>
-      {authorListChanged ? setAuthorListChanged(false) : authorRegisterList(authorList)}
+      <header>
+        <Navbar/>
+      </header>
+      <main className="form-center">
+        <h3>Cadastro de Autor</h3>
+        <form action="" onSubmit={(event) => {submitAuthor(event)}}>
+          <fieldset>
+            <FormGroup label="Nome do Autor" forModel="name">
+              <input className="form-control" type="text" name="name" id="name"
+              value={authorName}
+              onChange={(e) => setAuthorName(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup label="Data de Nascimento" forModel="birthDate">
+              <DatePicker
+              id="birthDate"
+              selected={birthDate}
+              onChange={(date:Date) => setBirthDate(date)}
+              locale="pt-BR"
+              minDate={timestampZero}
+              maxDate={date}
+              showYearDropdown
+              showMonthDropdown
+              dropdownMode="select"
+              className="form-control"
+              dateFormat="dd/MM/yyyy"
+              />
+            </FormGroup>
+            <FormGroup label="Nacionalidade" forModel="birthPlace">
+              <input className="form-control" type="text" name="birthPlace" id="birthPlace"
+              value={birthPlace}
+              onChange={(e) => setBirthPlace(e.target.value)}
+              />
+            </FormGroup>
+          </fieldset>
+          <button type="submit" className="btn btn-primary submit-btn">Submit</button>
+        </form>
+        <>
+        {
+          authorListChanged ? setAuthorListChanged(false) : authorRegisterList()
+        }
+        </>
+      </main>
     </>
-  )
+  );
 }
