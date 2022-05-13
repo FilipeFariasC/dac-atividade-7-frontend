@@ -7,11 +7,14 @@ import 'bootswatch/dist/minty/bootstrap.css'
 import Navbar from './components/Navbar'
 
 import AuthorRegister, {AuthorModel} from './components/AuthorRegister';
+import BookRegister, { BookModel } from './components/BookRegister';
 
 const authorList: AuthorModel[] = [];
+const bookList: BookModel[] = [];
 
 function App() {
   const [page, setPage] = useState(true);
+  const [userListChanged, setUserListChanged] = useState(false);
 
   return (
     <>
@@ -29,7 +32,11 @@ function App() {
           authorList={authorList}
           />
           : 
-          <h1>Página 2</h1>
+          <BookRegister
+          bookList={bookList}
+          authorList={authorList}
+          userListChanged={[userListChanged, setUserListChanged]}
+          />
         }
       </main>
       <footer></footer>

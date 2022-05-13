@@ -6,7 +6,6 @@ interface NavbarProps{
   goToBookRegisterPage: ()=> void;
 }
 
-
 export default function Navbar(props: NavbarProps){
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -23,29 +22,43 @@ export default function Navbar(props: NavbarProps){
            className={`nav-link `+ (props.page ? "active" : "")} href="#"
            onClick={
             (event)=>{
-             event.preventDefault();
-            props.goToAuthorRegisterPage()
+              event.preventDefault();
+              props.goToAuthorRegisterPage();
             }
-          }
-           >
+           }
+          >
             Cadastrar Autor
           </a>
         </li>
         <li className="nav-item">
           <a className={`nav-link `+ (props.page ? "": "active")} href="#"
-          onClick={
-            (event)=>{
-             event.preventDefault();
-            props.goToBookRegisterPage()
+            onClick={
+              (event)=>{
+              event.preventDefault();
+              props.goToBookRegisterPage()
+              }
             }
-          }
           >Cadastrar Obra</a>
         </li>
         <li className="nav-item dropdown">
           <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Cadastrar</a>
           <div className="dropdown-menu">
-            <a className="dropdown-item" href="#">Autor</a>
-            <a className="dropdown-item" href="#">Obra</a>
+            <a className={`dropdown-item `+ (props.page ? "active" : "")} href="#"
+              onClick={
+                (event)=>{
+                  event.preventDefault();
+                  props.goToAuthorRegisterPage();
+                }
+              }
+            >Autor</a>
+            <a className={`dropdown-item `+ (props.page ? "" : "active")}  href="#"
+              onClick={
+                (event)=>{
+                event.preventDefault();
+                props.goToBookRegisterPage()
+                }
+              }
+            >Obra</a>
           </div>
         </li>
       </ul>

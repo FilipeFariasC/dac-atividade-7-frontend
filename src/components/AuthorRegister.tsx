@@ -14,15 +14,48 @@ interface AuthorRegisterProps{
   authorList: AuthorModel[];
 }
 
-function authorRow(author: AuthorModel, index:number) {
+
+
+export default function AuthorRegister ({authorList} : AuthorRegisterProps){
+  const [authorName, setAuthorName] = useState("");
+  var timestampZero = new Date(1970, 0, 0);
+  var date : Date = subYears(new Date(), 18);
+
+  const [birthDate, setBirthDate] = useState(date);
+
+  const [birthPlace, setBirthPlace] = useState("");
+
+  const [authorListChanged, setAuthorListChanged] = useState(false);
+
+
+  function authorRow(author: AuthorModel, index:number) {
   return (
     <div key={index} className="register flex flex-col">
-      <h4>User {index}</h4>
-      <p>{author.name}</p>
-      <p>
-        <span className="dia">{author.birthDate.getDate()}</span>
+      <header className="flex">
+        <h4>Autor {index}</h4>
+        <button type="submit" className="btn btn-primary submit-btn"
+        onClick={() => {
+          authorList.splice(index, 1);
+          setAuthorListChanged(true);
+        }}
+        > Excluir </button>
+      </header>
+      <p className="registerField">
+        <p>Nome:</p> 
+        {author.name}
       </p>
-      <p>{author.birthPlace}</p>
+      <p className="registerField">
+        <p>Data de Nascimento:</p>
+        <span className="dia">{author.birthDate.getDate()}</span>
+        /
+        <span className="mes">{author.birthDate.getMonth()}</span>
+        /
+        <span className="ano">{author.birthDate.getFullYear()}</span>
+      </p>
+      <p className="registerField">
+        <p>Nacionalidade:</p>
+        {author.birthPlace}
+      </p>
     </div>
   );
 }
@@ -34,18 +67,6 @@ function authorRegisterList(authorList: AuthorModel[]) {
     </div>
   );
 }
-
-export default function AuthorRegister ({authorList} : AuthorRegisterProps){
-  const [authorName, setAuthorName] = useState("");
-  var timestampZero = new Date(1970, 0, 0);
-  var date : Date = subYears(new Date(), 18);
-
-  const [birthDate, setBirthDate] = useState(date);
-
-  const [birthPlace, setBirthPlace] = useState("");
-
-
-  const [authorCreated, setAuthorCreated] = useState(false);
 
 
   function submitAuthor(event: FormEvent<HTMLFormElement>){
@@ -77,7 +98,7 @@ export default function AuthorRegister ({authorList} : AuthorRegisterProps){
       birthPlace: birthPlace
     });
 
-    setAuthorCreated(true);
+    setAuthorListChanged(true);
   }
 
   return (
@@ -115,7 +136,7 @@ export default function AuthorRegister ({authorList} : AuthorRegisterProps){
         </fieldset>
         <button type="submit" className="btn btn-primary submit-btn">Submit</button>
       </form>
-      {authorCreated ? setAuthorCreated(false) : authorRegisterList(authorList)}
+      {authorListChanged ? setAuthorListChanged(false) : authorRegisterList(authorList)}
     </>
   )
 }

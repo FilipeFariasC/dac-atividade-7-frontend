@@ -8,7 +8,7 @@ interface FormGroupProps {
 
 export default function FormGroup(props: FormGroupProps) {
   return (
-    <div className="form-group mb-3">
+    <div className="form-group mb-2">
       <label htmlFor={props.forModel}>{props.label}</label>
       {props.children}
     </div>
