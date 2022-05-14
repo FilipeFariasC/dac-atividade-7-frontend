@@ -20,9 +20,7 @@ function App() {
 
   return (
     <>
-
       <AppRoutes authorList={authorList} bookList={bookList} userListChanged={[userListChanged, setUserListChanged]} />
-      
     </>
   );
 }

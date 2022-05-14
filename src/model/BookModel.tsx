@@ -2,7 +2,7 @@ import AuthorModel  from "../model/AuthorModel";
 
 export default interface BookModel {
   title: string;
-  publicationDate: Date;
   author: AuthorModel;
+  publicationDate: Date;
   genre: string;
 }

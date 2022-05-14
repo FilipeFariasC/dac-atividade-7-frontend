@@ -4,25 +4,28 @@ import FormGroup from './FormGroup';
 import DatePicker from "react-datepicker";
 import Navbar from "./Navbar";
 import BookModel from "../model/BookModel";
+import {differenceInDays} from "date-fns";
+
 interface BookRegisterProps{
   bookList: BookModel[];
   authorList: AuthorModel[];
   userListChanged: [boolean, (value: boolean) => void];
 }
 
-
-const defaultAuthor: AuthorModel = {
+function defaultAuthor() : AuthorModel{
+  return {
     name: "",
     birthDate: new Date(),
     birthPlace: ""
   }
-
+}
 
 export default function BookRegister(props: BookRegisterProps){
   const [bookTitle, setBookTitle] = useState("");
   const [publicationDate, setPublicationDate] = useState(new Date());
   const [author, setAuthor] = useState<AuthorModel>(defaultAuthor);
-  const [index, setIndex] = useState(-1);
+
+  const [authorIndex, setAuthorIndex] = useState(-1);
   const [genre, setGenre] = useState("");
 
   const [listChanged, setListChanged] = useState(false);
@@ -94,22 +97,31 @@ export default function BookRegister(props: BookRegisterProps){
   }
 
   function setAuthorByIndex(index: number){
-    console.log(index)
+
+    var authorValue; 
     if(index === -1){
-      setIndex(index);
-      setAuthor(defaultAuthor);
+      authorValue = defaultAuthor();
+      setAuthorIndex(index);
+      setAuthor(authorValue);
+      setPublicationDate(authorValue.birthDate);
       return;
     }
-    setIndex(index);
-    setAuthor(props.authorList[index]);
-  }
+    authorValue= props.authorList[index];
 
-  
-  function submitBook(event: FormEvent<HTMLFormElement>){
-    event.preventDefault();
+    var period = differenceInDays(publicationDate, authorValue.birthDate);
+
+    if(period < 0){
+      setPublicationDate(authorValue.birthDate);
+    }
+
+    setAuthorIndex(index);
+    setAuthor(authorValue);
+
     
-    const bookTitleElement = document.getElementById("bookTitle");
+  }
+  function isValidBook(){
     var entrou: boolean = false;
+    const bookTitleElement = document.getElementById("bookTitle");
     if(bookTitle.length === 0){
       bookTitleElement?.classList.add("is-invalid");
 
@@ -134,9 +146,13 @@ export default function BookRegister(props: BookRegisterProps){
       genreElement?.classList.remove("is-invalid");
       genreElement?.classList.add("is-valid");
     }
-
-
-    if(entrou){
+    return !entrou;
+  }
+  
+  function submitBook(event: FormEvent<HTMLFormElement>){
+    event.preventDefault();
+    
+    if(!isValidBook()){
       return;
     }
 
@@ -163,7 +179,7 @@ export default function BookRegister(props: BookRegisterProps){
               onChange={(event) => { setBookTitle(event.target.value); } } />
           </FormGroup>
           <FormGroup label="Autor" forModel="author">
-            <select value={index} name="author" id="author" className="form-select"
+            <select value={authorIndex} name="author" id="author" className="form-select"
               onChange={(event) => {
                 setAuthorByIndex(Number(event.target.value));
               } }>

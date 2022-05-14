@@ -14,10 +14,9 @@ interface AuthorRegisterProps{
 
 export default function AuthorRegister ({authorList} : AuthorRegisterProps){
   const [authorName, setAuthorName] = useState("");
-  var timestampZero = new Date(1970, 0, 0);
-  var date : Date = subYears(new Date(), 18);
+  var minValidBirthDate : Date = subYears(new Date(), 18);
 
-  const [birthDate, setBirthDate] = useState(date);
+  const [birthDate, setBirthDate] = useState(minValidBirthDate);
 
   const [birthPlace, setBirthPlace] = useState("");
 
@@ -60,10 +59,7 @@ export default function AuthorRegister ({authorList} : AuthorRegisterProps){
     );
   }
 
-
-  function submitAuthor(event: FormEvent<HTMLFormElement>){
-    event.preventDefault();
-    
+  function isValidAuthor(){
     const authorNameElement = document.getElementById("name");
     var entrou: boolean = false;
     if(authorName.length === 0){
@@ -82,7 +78,13 @@ export default function AuthorRegister ({authorList} : AuthorRegisterProps){
       authorBirthPlaceElement?.classList.remove("is-invalid");
       authorBirthPlaceElement?.classList.add("is-valid");
     }
-    if(entrou){
+    return !entrou;
+  }
+
+  function submitAuthor(event: FormEvent<HTMLFormElement>){
+    event.preventDefault();
+    
+    if(!isValidAuthor()){
       return;
     }
 
@@ -115,9 +117,7 @@ export default function AuthorRegister ({authorList} : AuthorRegisterProps){
               id="birthDate"
               selected={birthDate}
               onChange={(date:Date) => setBirthDate(date)}
-              locale="pt-BR"
-              minDate={timestampZero}
-              maxDate={date}
+              maxDate={minValidBirthDate}
               showYearDropdown
               showMonthDropdown
               dropdownMode="select"
