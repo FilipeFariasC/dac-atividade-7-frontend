@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import NavItem from './NavItem';
 
 
@@ -15,8 +15,15 @@ export default function Navbar(){
           <ul className="navbar-nav me-auto">
             <NavItem link="/registerAuthor" label={'Cadastrar Autor'}/>
             <NavItem link="/registerBook" label={'Cadastrar Obra'}/>
+            <NavItem link="#" label={'Cadastrar'} appendClassName="dropdown">
+              <div className="dropdown-menu">
+                <NavLink className="dropdown-item" to="/registerAuthor"> Autor </NavLink>
+                <NavLink className="dropdown-item" to="/registerBook"> Obra </NavLink>
+              </div>
+            </NavItem>
           </ul>
         </div>
+        
       </div>
     </nav>
   );
