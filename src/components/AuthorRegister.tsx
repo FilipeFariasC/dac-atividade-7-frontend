@@ -5,12 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {subYears} from "date-fns";
 import Navbar from "./Navbar";
-
-export interface AuthorModel {
-  name: string;
-  birthDate: Date;
-  birthPlace: string;
-}
+import AuthorModel from "../model/AuthorModel"
 interface AuthorRegisterProps{
   authorList: AuthorModel[];
 }

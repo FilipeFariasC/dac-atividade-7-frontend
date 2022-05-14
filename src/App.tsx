@@ -8,8 +8,8 @@ import 'bootswatch/dist/litera/bootstrap.css'
 import 'bootswatch/dist/zephyr/bootstrap.css'
 */
 
-import {AuthorModel} from './components/AuthorRegister';
-import { BookModel } from './components/BookRegister';
+import AuthorModel from './model/AuthorModel';
+import BookModel from './model/BookModel';
 import AppRoutes from './main/AppRoutes';
 
 const authorList: AuthorModel[] = [];

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 interface NavItemProps{
   label: string;
@@ -8,12 +8,12 @@ interface NavItemProps{
 export default function NavItem({label, link}: NavItemProps){
   return (
     <li className="nav-item">
-      <Link
-      className="nav-link"
-      to={link} 
+      <NavLink
+      to={link}
+      className={({isActive}) => "nav-link " + (isActive ? 'active' : '') } 
       >
         {label}
-      </Link>
+      </NavLink>
     </li>
   )
 }

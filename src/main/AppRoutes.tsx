@@ -1,6 +1,8 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
-import AuthorRegister, { AuthorModel } from '../components/AuthorRegister';
-import BookRegister, { BookModel } from '../components/BookRegister';
+import BookModel from '../model/BookModel';
+import AuthorModel from '../model/AuthorModel';
+import AuthorRegister from '../components/AuthorRegister';
+import BookRegister from '../components/BookRegister';
 
 export interface AppRoutesProps{
   authorList: AuthorModel[];

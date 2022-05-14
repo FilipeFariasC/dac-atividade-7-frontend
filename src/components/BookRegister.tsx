@@ -1,21 +1,16 @@
 import {FormEvent, useState} from "react";
-import { AuthorModel } from "./AuthorRegister";
+import AuthorModel  from "../model/AuthorModel";
 import FormGroup from './FormGroup';
 import DatePicker from "react-datepicker";
 import Navbar from "./Navbar";
-
+import BookModel from "../model/BookModel";
 interface BookRegisterProps{
   bookList: BookModel[];
   authorList: AuthorModel[];
   userListChanged: [boolean, (value: boolean) => void];
 }
 
-export interface BookModel {
-  title: string;
-  publicationDate: Date;
-  author: AuthorModel;
-  genre: string;
-}
+
 const defaultAuthor: AuthorModel = {
     name: "",
     birthDate: new Date(),
@@ -44,7 +39,7 @@ export default function BookRegister(props: BookRegisterProps){
     }
   }
 
-  function bookRow(book: BookModel, index:number, setListChanged: (value: boolean) => void) {
+  function bookRow(book: BookModel, index:number) {
   return (
     <div key={index} className="register flex flex-col">
       <header className="flex">
@@ -85,7 +80,7 @@ export default function BookRegister(props: BookRegisterProps){
   function bookRegisterList(bookList: BookModel[]) {
   return (
     <div className={"registerList " + (bookList.length > 0 ? "show" : "")}>
-      {bookList.map((book, index) => bookRow(book, index, setListChanged))}
+      {bookList.map((book, index) => bookRow(book, index))}
     </div>
   );
 }
