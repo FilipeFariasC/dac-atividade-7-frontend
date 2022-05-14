@@ -10,8 +10,6 @@ interface AuthorRegisterProps{
   authorList: AuthorModel[];
 }
 
-
-
 export default function AuthorRegister ({authorList} : AuthorRegisterProps){
   const [authorName, setAuthorName] = useState("");
   var minValidBirthDate : Date = subYears(new Date(), 18);

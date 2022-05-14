@@ -79,7 +79,6 @@ export default function BookRegister(props: BookRegisterProps){
   );
 }
 
-
   function bookRegisterList(bookList: BookModel[]) {
   return (
     <div className={"registerList " + (bookList.length > 0 ? "show" : "")}>

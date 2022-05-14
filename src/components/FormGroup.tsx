@@ -6,11 +6,11 @@ interface FormGroupProps {
 }
 
 
-export default function FormGroup(props: FormGroupProps) {
+export default function FormGroup({label, forModel, children}: FormGroupProps) {
   return (
     <div className="form-group mb-2">
-      <label htmlFor={props.forModel}>{props.label}</label>
-      {props.children}
+      <label htmlFor={forModel}>{label}</label>
+      {children}
     </div>
   );
 }
