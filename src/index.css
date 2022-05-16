@@ -1,4 +1,5 @@
-.form-center {
+.form-center,
+.main-center {
   display: flex;
   align-items: center;
   justify-content: center;

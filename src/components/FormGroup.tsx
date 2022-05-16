@@ -9,7 +9,7 @@ interface FormGroupProps {
 export default function FormGroup({label, forModel, children}: FormGroupProps) {
   return (
     <div className="form-group mb-2">
-      <label htmlFor={forModel}>{label}</label>
+      <label className="col-form-label" htmlFor={forModel}>{label}</label>
       {children}
     </div>
   );
