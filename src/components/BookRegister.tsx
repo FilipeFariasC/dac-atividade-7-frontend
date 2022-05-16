@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import Navbar from "./Navbar";
 import BookModel from "../model/BookModel";
 import {differenceInDays} from "date-fns";
+import BookServiceInterface from "../services/BookServiceInterface";
 
 interface BookRegisterProps{
   bookList: BookModel[];
@@ -19,6 +20,8 @@ function defaultAuthor() : AuthorModel{
     birthPlace: ""
   }
 }
+
+var service: BookServiceInterface;
 
 export default function BookRegister(props: BookRegisterProps){
   const [bookTitle, setBookTitle] = useState("");
@@ -51,6 +54,7 @@ export default function BookRegister(props: BookRegisterProps){
         onClick={() => {
           props.bookList.splice(index, 1);
           setListChanged(true);
+          service.delete(index);
         }}>
         Excluir
         </button>
@@ -154,13 +158,14 @@ export default function BookRegister(props: BookRegisterProps){
     if(!isValidBook()){
       return;
     }
-
-    props.bookList.push({
+    const book: BookModel = {
       title: bookTitle,
       publicationDate: publicationDate,
       author: author,
       genre: genre
-    });
+    }
+    props.bookList.push(book);
+    service.create(book);
 
     setListChanged(true);
   }

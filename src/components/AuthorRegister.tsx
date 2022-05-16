@@ -6,9 +6,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import {subYears} from "date-fns";
 import Navbar from "./Navbar";
 import AuthorModel from "../model/AuthorModel"
+import AuthorServiceInterface from "../services/AuthorServiceInterface";
 interface AuthorRegisterProps{
   authorList: AuthorModel[];
 }
+
+var service: AuthorServiceInterface;
 
 export default function AuthorRegister ({authorList} : AuthorRegisterProps){
   const [authorName, setAuthorName] = useState("");
@@ -30,6 +33,7 @@ export default function AuthorRegister ({authorList} : AuthorRegisterProps){
         onClick={() => {
           authorList.splice(index, 1);
           setAuthorListChanged(true);
+          service.delete(index);
         }}
         > Excluir </button>
       </header>
@@ -86,11 +90,14 @@ export default function AuthorRegister ({authorList} : AuthorRegisterProps){
       return;
     }
 
-    authorList.push({
+    const author = {
       name: authorName,
       birthDate: birthDate,
       birthPlace: birthPlace
-    });
+    }
+
+    authorList.push(author);
+    service.create(author);
 
     setAuthorListChanged(true);
   }
