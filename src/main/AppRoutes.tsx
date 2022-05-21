@@ -17,15 +17,16 @@ export default function AppRoutes(
   {
     userState
   } : AppRoutesProps){
+    const [userLogged, setUserLogged] = userState; 
   return (
     <BrowserRouter>
       <Routes>
-        <Route caseSensitive path="/login" element={<Login setUserLogged={userState[1]} />} />
-        <Route caseSensitive path="/" element={(userState[0].username === "monteiro@ifpb.edu.br" && userState[0].password === "123")
+        <Route caseSensitive path="/login" element={<Login setUserLogged={setUserLogged} />} />
+        <Route caseSensitive path="/" element={(userLogged.username === "monteiro@ifpb.edu.br" && userLogged.password === "123")
           ?
           <Home />
           :
-          <Login setUserLogged={userState[1]} />} />
+          <Login setUserLogged={setUserLogged} />} />
 
         <Route caseSensitive path="/registerAuthor/" element={<AuthorRegisterPage />} />
         <Route caseSensitive path="/listAuthors/" element={<AuthorListPage />} />
