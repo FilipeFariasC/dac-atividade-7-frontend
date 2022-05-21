@@ -8,13 +8,11 @@ import 'bootswatch/dist/litera/bootstrap.css'
 import 'bootswatch/dist/zephyr/bootstrap.css'
 */
 
-import AuthorModel from './model/AuthorModel';
-import BookModel from './model/BookModel';
+import AuthorModel from './model/AuthorDto';
+import WorkModel from './model/WorkDto';
 import AppRoutes from './main/AppRoutes';
 import UserModel from "./model/UserModel";
-
-const authorList: AuthorModel[] = [];
-const bookList: BookModel[] = [];
+import Navbar from "./components/Navbar";
 
 function defaultUser(): UserModel {
   return {
@@ -23,18 +21,13 @@ function defaultUser(): UserModel {
   }
 }
 
-function App() {
+export default function App() {
   const [userLogged, setUserLogged] = useState(defaultUser());
-  const [userListChanged, setUserListChanged] = useState(false);
 
   return (
     <>
-      <AppRoutes userState={[userLogged, setUserLogged]} 
-      authorList={authorList} 
-      bookList={bookList} 
-      userListChanged={[userListChanged, setUserListChanged]} />
+      <AppRoutes userState={[userLogged, setUserLogged]} />
     </>
   );
 }
 
-export default App;

@@ -1,4 +1,4 @@
-import UserModel from "../model/UserModel";
+import UserModel from "../../model/UserModel";
 
 
 export default interface UserServiceInterface {

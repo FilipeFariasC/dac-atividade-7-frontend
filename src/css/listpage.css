@@ -1,0 +1,33 @@
+
+.list{
+  display: flex;
+  flex-direction: row;
+  padding-block: 1rem;
+  gap: 1rem;
+
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: scroll;
+}
+.register {
+  width: 100%;
+}
+.register {
+  display: flex;
+  flex-direction: column;
+
+  padding-block: 1rem;
+}
+
+.register * {
+  margin: 0;
+  padding: 0;
+
+}
+
+.crud-buttons{
+  display: flex;
+  gap: 0.75rem;
+
+  justify-content: space-between;
+}

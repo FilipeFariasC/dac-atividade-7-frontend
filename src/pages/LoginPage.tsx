@@ -1,5 +1,5 @@
-import FormGroup from "./FormGroup";
-import Navbar from "./Navbar";
+import FormGroup from "../components/FormGroup";
+import Navbar from "../components/Navbar";
 import {useState} from "react"
 import UserModel from "../model/UserModel";
 
@@ -7,10 +7,10 @@ interface LoginProps{
     setUserLogged: (user: UserModel)=> void;
 }
 function submitCredentials(username: string, password: string){
-    return username == "monteiro@ifpb.edu.br" && password == "123"
+    return username === "monteiro@ifpb.edu.br" && password === "123"
 }
 
-export default function Login(props : LoginProps){
+export default function LoginPage(props : LoginProps){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("")
 

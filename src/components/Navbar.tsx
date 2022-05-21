@@ -13,12 +13,16 @@ export default function Navbar(){
 
         <div className="collapse navbar-collapse" id="navbarColor01">
           <ul className="navbar-nav me-auto">
-            <NavItem link="/registerAuthor" label={'Cadastrar Autor'}/>
-            <NavItem link="/registerBook" label={'Cadastrar Obra'}/>
-            <NavItem link="#" label={'Cadastrar'} appendClassName="dropdown">
+            <NavItem link="#" label={'Autor'} appendClassName="dropdown">
               <div className="dropdown-menu">
-                <NavLink className="dropdown-item" to="/registerAuthor"> Autor </NavLink>
-                <NavLink className="dropdown-item" to="/registerBook"> Obra </NavLink>
+                <NavLink className="dropdown-item" to="/registerAuthor"> Cadastrar Autor </NavLink>
+                <NavLink className="dropdown-item" to="/listAuthors"> Listar Autores </NavLink>
+              </div>
+            </NavItem>
+            <NavItem link="#" label={'Obra'} appendClassName="dropdown">
+              <div className="dropdown-menu">
+                <NavLink className="dropdown-item" to="/registerWork"> Cadastrar Obra </NavLink>
+                <NavLink className="dropdown-item" to="/listWorks"> Listar Obras </NavLink>
               </div>
             </NavItem>
           </ul>
